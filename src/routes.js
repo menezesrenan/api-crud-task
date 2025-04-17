@@ -31,6 +31,12 @@ export const routes = [
     handler: (req, res) => {
       const { title, description } = req.body;
 
+      if (!title && !description) {
+        return res
+          .writeHead(400)
+          .end(JSON.stringify({ error: 'Title or description is required' }));
+      }
+
       const task = {
         id: randomUUID(),
         title,
@@ -106,7 +112,17 @@ export const routes = [
     handler: (request, response) => {
       const { id } = request.params;
 
-      database.delete('tasks', id);
+      const existingTask = database
+        .select('tasks')
+        .find((task) => task.id === id);
+
+      if (!existingTask) {
+        return res
+          .writeHead(404)
+          .end(JSON.stringify({ error: 'Task not found' }));
+      }
+
+      if (id) database.delete('tasks', id);
       return response.writeHead(204).end();
     },
   },

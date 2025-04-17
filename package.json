@@ -2,8 +2,8 @@
   "name": "api-crud-task",
   "type": "module",
   "version": "1.0.0",
-  "description": "## Sobre o desafio",
-  "main": "index.js",
+  "description": "challenge to create a CRUD API with Node.js",
+  "main": "server.js",
   "scripts": {
     "dev": "node --watch src/server.js"
   },
